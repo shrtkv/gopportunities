@@ -12,7 +12,7 @@ var (
 func main() {
 	logger = config.GetLogger("main")
 	err := config.Init()
-	if err == nil {
+	if err != nil {
 		logger.Errorf("config initialization error: %v", err)
 		return
 	}
