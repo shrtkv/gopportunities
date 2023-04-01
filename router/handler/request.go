@@ -6,19 +6,20 @@ import (
 
 // create opening
 
- func errParamIsRequired(name, typ string) error{
+func errParamIsRequired(name, typ string) error {
 	return fmt.Errorf("param: %s (type: %s) is required", name, typ)
- }
-type CreateOpeningRequest struct {
-	Role     string `json: "role"`
-	Company  string `json: "company"`
-	Location string `json: "location"`
-	Remote   *bool `json: "remote"`
-	Link     string `json: "link"`
-	Salary   int64 `json: "salary"`
 }
 
-func (r *CreateOpeningRequest) Validate() error { 
+type CreateOpeningRequest struct {
+	Role     string `json:"role"`
+	Company  string `json:"company"`
+	Location string `json:"location"`
+	Remote   *bool  `json:"remote"`
+	Link     string `json:"link"`
+	Salary   int64  `json:"salary"`
+}
+
+func (r *CreateOpeningRequest) Validate() error {
 	if r.Role == "" && r.Company == "" && r.Location == "" && r.Remote == nil && r.Salary <= 0 {
 		return fmt.Errorf("request body is empty or malformed")
 	}
@@ -34,13 +35,13 @@ func (r *CreateOpeningRequest) Validate() error {
 	// if nothing is sent (false or true), remote == nil >> forces user to define
 	if r.Remote == nil {
 		return errParamIsRequired("remote", "bool")
-	}	
+	}
 	if r.Link == "" {
 		return errParamIsRequired("link", "string")
-	}	
+	}
 	if r.Salary <= 0 {
 		return errParamIsRequired("salary", "int64")
-	}	
+	}
 	return nil
 
 }
